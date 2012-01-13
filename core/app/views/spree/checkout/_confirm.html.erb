@@ -1,11 +1,34 @@
-<fieldset id="order_details" data-hook>
-  <div class="clear"></div>
-  <legend><%= t(@order.state, :scope => :order_state).titleize %></legend>
-  <%= render :partial => 'spree/shared/order_details', :locals => { :order => @order } %>
-</fieldset>
+<div id="checkout_form_payment">
+  <legend>Confirm</legend>
+	<div class="inner1" data-hook="billing_inner">
+		<ul id="confirmInfo" class="clear">
+			<li>
+      <label><%= t(:shipping_address) %>:</label><br />
+        <%= render :partial => 'spree/shared/confirm_address', :locals => { :address => @order.ship_address } %>
+			</li>
+			<li>
+				<label><%= t(:billing_address) %>:</label><br />
+        <%= render :partial => 'spree/shared/confirm_address', :locals => { :address => @order.bill_address } %>
+      </li>
 
-<hr />
+      <li class="confirmbillinginfoPic">
+        <label>Billing Information:</label><br />
+        <p><%= @order.payments.first.payment_method.name %>
+        <% if @order.payments.first.source.kind_of? Spree::Creditcard %>
+          (<%= @order.payments.first.source.last_digits %>)
+        <% end %>
+        </p>
+        <p><%= link_to "(#{t(:change)})", checkout_state_path(:payment) %></p>
+      </li>
 
-<div class="form-buttons" data-hook="buttons">
-  <%= submit_tag t(:place_order), :class => 'continue button primary' %>
+		</ul>	
+		<div class="confirmItems clear" >
+      <%= render :partial => 'spree/shared/order_details', :locals => { :order => @order } %>
+		</div>
+  </div>
+
+  <div class="form-buttons" data-hook="buttons">
+    <%= submit_tag t(:place_order), :class => 'checkoutSave' %>
+  </div>
+</div>
 </div>

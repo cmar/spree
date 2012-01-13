@@ -1,13 +1,53 @@
 <% if flash[:alert] %>
   <div class="flash errors"><%= flash[:alert] %></div>
 <% end %>
+<%= render :partial => 'spree/shared/error_messages', :locals => { :target => @user } %>
 
 <% @body_id = 'login' %>
-<div id="existing-customer">
-  <h2><%= t(:login_as_existing) %></h2>
-  <div data-hook="login">
-    <%= render :partial => 'spree/shared/login' %>
-    <%= t(:or) %> <%= link_to t(:create_a_new_account), spree.signup_path %> | <%= link_to t(:forgot_password), spree.new_user_password_path %>
-  </div>
+
+<div class="registerLogin">
+  <div class="existing"><%= t(:login_as_existing) %></div>
+  <%= form_for :user, :url => spree.user_session_path, :html => { :class => 'clear' } do |f| %>
+    <div id="password-credentials">
+      <p style="width:100%; float:left;">
+        <%= f.label :email, t(:email) %>
+        <%= f.email_field :email, :class => 'title' %>
+      </p>
+      <p style="width:100%; float:left;">
+        <%= f.label :password, t(:password) %>
+        <%= f.password_field :password, :class => 'title' %>
+      </p>
+      <p class="registerLoginRem" style="width:100%; float:left;">
+        <%= f.check_box :remember_me %><%= t(:remember_me) %>
+      </p>
+      <p style="width:100%; float:left;"><%= f.submit t(:login), :class => 'registerButton' %></p>
+      <%= link_to t(:forgot_password), spree.new_user_password_path %>
+    </div>
+  <% end %>
 </div>
-<div data-hook="login_extras"></div>
+
+<div class="register">
+  <div class="existing1"><%= t(:new_customer) %></div>			
+  <%= form_for :user, :url => spree.user_registration_path(@user), :html => { :class => 'clear' } do |f| %>
+    <div  style="width:430px"  id="password-credentials1"  data-hook="signup_inside_form">
+      <p>
+        <%= f.label :email, t(:email) %>
+        <%= f.email_field :email, :class => 'title' %>
+      </p>
+    </div>
+    <div id="password-credentials1"  style="width:430px">
+      <p>
+        <%= f.label :password, t(:password) %>
+        <%= f.password_field :password, :class => 'title' %>
+      </p>			
+      <p>
+        <%= f.label :password_confirmation, t(:confirm_password) %>
+        <%= f.password_field :password_confirmation, :class => 'title' %>
+      </p>
+    </div>			
+    <div data-hook="signup_below_password_fields">			
+      <p><%= f.submit t(:create), :class => 'registerButton' %></p>
+    </div>
+   <% end %>
+</div>
+

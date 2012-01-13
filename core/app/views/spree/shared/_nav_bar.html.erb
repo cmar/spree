@@ -1,6 +1,9 @@
-<li id="search-bar" data-hook>
-  <%= render :partial => 'spree/shared/search' %>
-</li>
-<% if store_menu? %>
-  <%= render :partial => 'spree/shared/store_menu' %>
-<% end %>
+<div class="headerUtility">
+  <ul>
+    <li id="login-bar"></li>
+    <li>
+      <%= render :partial => 'spree/shared/search' %>
+    </li>
+  </ul>
+</div>
+<%= render :partial => 'spree/shared/store_menu' %>

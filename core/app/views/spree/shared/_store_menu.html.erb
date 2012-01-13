@@ -1,3 +1,21 @@
-<li id="home-link" data-hook><%= link_to t(:home), root_path %></li>
-<li id="link-to-cart" data-hook><%= link_to_cart %></li>
+<ul class="headerNav">
+  <li class="active"><%= link_to t(:home), root_path %></li>
 
+  <% Spree::Taxonomy.find_by_name('Categories').root.children.each do |taxon| %>
+    <li><%= link_to taxon.name, seo_url(taxon) %></li>
+  <% end %>
+
+  <li class="cartWrap">
+    <%= link_to cart_path do %>
+      <span class="cartIcon"></span>
+      <span class="cartText"><%= t(:cart) %></span>
+      <span class="cartCost">
+        <% if current_order.nil? or current_order.line_items.empty? %>
+          <%= t('empty') %>
+        <% else %>
+          <%= "(#{current_order.item_count}) #{order_subtotal(current_order)}" %>
+        <% end %>
+      </span>
+    <% end %>
+  </li>
+</ul>

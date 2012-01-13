@@ -2,18 +2,23 @@
 <html>
   <head data-hook="inside_head">
     <%= render :partial => 'spree/shared/head' %>
+    <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+    <!--[if IE 7]>
+      <style type="text/css">
+      #keywords { margin-top:-1px; }
+      #mail { margin-top:-1px; }
+      .cartIcon { margin-top:0px; }
+      .cartText {margin-top:4px;}
+      </style>
+      <![endif]-->
   </head>
   <body class="<%= body_class %>" id="<%= @body_id || 'default' %>" data-hook="body">
-    <div id="header" data-hook>
-      <ul id="nav-bar" data-hook>
-        <%= render :partial => 'spree/shared/nav_bar' %>
-      </ul>
-      <div id="logo" data-hook>
-        <%= logo %>
-      </div>
+    <div id="header" data-hook class="container clear">
+      <h1>Spree</h1>
+      <%= render :partial => 'spree/shared/nav_bar' %>
     </div>
 
-    <div id="wrapper" data-hook>
+    <div id="wrapper" data-hook class="clear container">
       <% if content_for?(:sidebar) %>
         <div id="sidebar" data-hook>
           <%= yield :sidebar %>
@@ -27,12 +32,41 @@
       </div>
     </div>
 
-    <div id="footer" data-hook>
-      <div id="footer-left" data-hook>
-        <p><%= t(:powered_by) %> <%= link_to 'Spree', 'http://spreecommerce.com/' %></p>
+    <div id="footer" data-hook class="container">
+    	<div class="preFooter clear">
+    		<ul class="preFooterLinks">
+    			<li><strong>Quick Links</strong></li>
+
+          <li><%= link_to t(:home), root_path %></li>
+    			<li><a href="">About Us</a></li>
+    			<li><a href="">Contact</a></li>
+    		</ul>
+    		<ul class="preFooterFollow">
+    			<li><strong>Follow us</strong></li>
+    			<li><a href="" class="rss">RSS Feed</a></li>
+    			<li><a href="" class="rss">Facebook</a></li>
+    			<li><a href="" class="rss">Flickr</a></li>
+    		</ul>
+    		<ul class="preFooterTwitter">
+    			<li><strong>Twitter</strong></li>
+    			<li>We are selling millions with our new Spree store!</li>
+    		</ul>
+
+    		<ul class="preFooterNews">
+    			<li><strong>Newsletter</strong></li>
+    			<li>
+    				<form target="_blank" class="validate" name="mc-embedded-subscribe-form" id="mc-embedded-subscribe-form" method="post" action="">
+    					<div style="width:161px; float:left;"><input type="text" placeholder="your@email.com" id="mail" class="required email" name="EMAIL" value=""/></div>
+    					<div style="width:100px; float:left;"><input type="submit" class="button" name="subscribe" value="Subscribe"/></div>
+    				</form>
+    			</li>
+    		</ul>
+    	</div>
+    	<div class="footerCopy">
+        	<p><%= t(:powered_by) %> <%= link_to 'Spree', 'http://spreecommerce.com/' %></p>
       </div>
-      <div id="footer-right" data-hook></div>
     </div>
+
     <%= render :partial => 'spree/shared/google_analytics' %>
   </body>
 </html>

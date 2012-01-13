@@ -1,14 +1,41 @@
 <h1><%= accurate_title %></h1>
 
 <div id="order" data-hook>
-  <% if params.has_key? :checkout_complete %>
-    <h3><%= t(:thank_you_for_your_order) %></h3>
-  <% end %>
-  <%= render :partial => 'spree/shared/order_details', :locals => { :order => @order } %>
-  <p data-hook="links">
-    <%= link_to t(:back_to_store), spree.root_path %>
+
+<div id="checkout_form_payment">
+  <legend><%= "#{t(:order)} #{@order.number}" %></legend>
+  <div class="inner1" data-hook="billing_inner">
+   		<ul id="confirmInfo" class="clear">
+        <li>
+        <label><%= t(:shipping_address) %>:</label><br />
+          <%= render :partial => 'spree/shared/confirm_address', :locals => { :address => @order.ship_address } %>
+        </li>
+        <li>
+          <label><%= t(:billing_address) %>:</label><br />
+          <%= render :partial => 'spree/shared/confirm_address', :locals => { :address => @order.bill_address } %>
+        </li>
+
+        <li class="confirmbillinginfoPic">
+          <label>Billing Information:</label><br />
+          <p><%= @order.payments.first.payment_method.name %>
+          <% if @order.payments.first.source.kind_of? Spree::Creditcard %>
+            (<%= @order.payments.first.source.last_digits %>)
+          <% end %>
+          </p>
+          <p><%= link_to "(#{t(:change)})", checkout_state_path(:payment) %></p>
+        </li>
+		</ul>	
+		<div class="confirmItems clear" >
+      <%= render :partial => 'spree/shared/order_details', :locals => { :order => @order } %>
+		</div>
+  </div>
+  <div class="form-buttons" data-hook="buttons">
+    <%= link_to t(:back_to_store), spree.root_path, :class => 'checkoutButton checkout primary' %>
     <% unless params.has_key? :checkout_complete %>
-      | <%= link_to t(:my_account), spree.account_path if current_user%>
+      <%= link_to t(:my_account), spree.account_path, :class => 'button' if current_user %>
     <% end %>
-  </p>
+  </div>
 </div>
+</div>
+</div>
+

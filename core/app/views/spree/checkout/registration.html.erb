@@ -5,16 +5,25 @@
     <!-- TODO: add partial with registration form -->
   </div>
   <% if Spree::Config[:allow_guest_checkout] %>
-    <div id="guest_checkout" data-hook>
-      <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @order } %>
-      <h2><%= t(:guest_user_account) %></h2>
-      <%= form_for @order, :url => update_checkout_registration_path, :method => :put, :html => { :id => 'checkout_form_registration' } do |f| %>
-        <p>
-          <%= f.label :email, t(:email) %><br />
-          <%= f.email_field :email, :class => 'title' %>
-        </p>
-        <p><%= f.submit t(:continue), :class => 'button primary' %></p>
+    <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @order } %>
+	  <div class="registerGuest">
+			<div class="existing1"><%= t(:guest_user_account) %></div>
+      <%= form_for @order, :url => update_checkout_registration_path,
+        :method => :put, :html => { :id => 'checkout_form_registration', :class => 'clear' } do |f| %>
+
+				<div style="margin: 0pt; padding: 0pt; display: inline;"><input type="hidden" value="âœ“" name="utf8"/><input type="hidden" value="udU+BAOm12S6vsqUynMpLoQ195Y3UoiovGiob6X+Du4=" name="authenticity_token"/></div>
+				<div data-hook="signup_inside_form">
+					<p>
+            <%= f.label :email, t(:email) %>
+            <%= f.email_field :email, :class => 'title' %>
+					</p>
+				</div>						
+				<div data-hook="signup_below_password_fields">			
+			        <p><%= f.submit t(:continue), :class => 'registerButton' %></p>
+				</div>
       <% end %>
-    </div>
+		</div>
   <% end %>
 </div>
+
+
