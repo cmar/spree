@@ -24,7 +24,6 @@ module Spree
     has_many :product_properties, :dependent => :destroy
     has_many :properties, :through => :product_properties
     has_many :images, :as => :viewable, :order => :position, :dependent => :destroy
-    has_and_belongs_to_many :product_groups, :join_table => 'spree_product_groups_products'
     belongs_to :tax_category
     has_and_belongs_to_many :taxons, :join_table => 'spree_products_taxons'
     belongs_to :shipping_category
@@ -39,10 +38,9 @@ module Spree
     after_create :set_master_variant_defaults
     after_create :add_properties_and_option_types_from_prototype
     before_save :recalculate_count_on_hand
-    after_save :update_memberships if ProductGroup.table_exists?
     after_save :save_master
     after_save :set_master_on_hand_to_zero_when_product_has_variants
-    
+
     has_many :variants,
       :class_name => 'Spree::Variant',
       :conditions => ["#{::Spree::Variant.quoted_table_name}.is_master = ? AND #{::Spree::Variant.quoted_table_name}.deleted_at IS NULL", false],
@@ -212,10 +210,6 @@ module Spree
       # when saving so we force a save using a hook.
       def save_master
         master.save if master && (master.changed? || master.new_record?)
-      end
-
-      def update_memberships
-        self.product_groups = ProductGroup.all.select { |pg| pg.include?(self) }
       end
   end
 end
