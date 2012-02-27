@@ -86,15 +86,6 @@ en:
         on_hand: "On Hand"
         shipping_category: "Shipping Category"
         tax_category: "Tax Category"
-      spree/product_group:
-        name: Name
-        product_count: "Product count"
-        product_scopes: "Product scopes"
-        products: "Products"
-        url: URL
-      spree/product_scope:
-        arguments: "Arguments"
-        description: "Description"
       spree/property:
         name: Name
         presentation: Presentation
@@ -168,9 +159,6 @@ en:
       spree/product:
         one: Product
         other: Products
-      spree/product_group:
-        one: "Product group"
-        other: "Product groups"
       spree/property:
         one: Property
         other: Properties
@@ -323,7 +311,6 @@ en:
   country_based: "Country Based"
   create: Create
   create_a_new_account: "Create a new account"
-  create_product_group_from_products: Create a new product group from these products
   create_user_account: Create User Account
   created_successfully: "Created Successfully"
   credit: Credit

@@ -11,13 +11,17 @@ module Spree
 
         def retrieve_products
           @products_scope = get_base_scope
-          curr_page = manage_pagination && keywords ? 1 : page
+          curr_page = keywords ? 1 : page
 
           @products = @products_scope.includes([:images, :master]).page(curr_page).per(per_page)
         end
 
         def method_missing(name)
-          @properties[name]
+          if @properties.has_key? name
+            @properties[name]
+          else
+            super
+          end
         end
 
         protected
@@ -25,9 +29,22 @@ module Spree
             base_scope = Spree::Product.active
             base_scope = base_scope.in_taxon(taxon) unless taxon.blank?
             base_scope = get_products_conditions_for(base_scope, keywords) unless keywords.blank?
-
             base_scope = base_scope.on_hand unless Spree::Config[:show_zero_stock_products]
-            #base_scope = base_scope.group_by_products_id if @product_group.product_scopes.size > 1
+            base_scope = add_search_scopes(base_scope)
+            base_scope
+          end
+
+          def add_search_scopes(base_scope)
+            search.each do |name, scope_attribute|
+              next if name.to_s =~ /eval|send|system/
+
+              scope_name = name.intern
+              if base_scope.respond_to? scope_name
+                base_scope = base_scope.send(scope_name, *scope_attribute)
+              else
+                base_scope = base_scope.merge(Spree::Product.metasearch({scope_name => scope_attribute}).relation)
+              end
+            end if search
             base_scope
           end
 
