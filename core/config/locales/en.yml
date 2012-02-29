@@ -688,18 +688,12 @@ en:
         description: "Scopes for selecting products based on option and property values"
         name: Values
     scopes:
-      ascend_by_master_price:
-        name: Ascend by product master price
       ascend_by_name:
         name: Ascend by product name
       ascend_by_updated_at:
         name: Ascend by actualization date
-      descend_by_master_price:
-        name: Descend by product master price
       descend_by_name:
         name: Descend by product name
-      descend_by_popularity:
-        name: Sort by popularity(most popular first)
       descend_by_updated_at:
         name: Descend by actualization date
       in_name:

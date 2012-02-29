@@ -5,12 +5,7 @@ module Spree
         :ascend_by_updated_at,
         :descend_by_updated_at,
         :ascend_by_name,
-        :descend_by_name,
-        # Need to have master price scopes here
-        # This makes them appear in admin/product_groups/edit
-        :ascend_by_master_price,
-        :descend_by_master_price,
-        :descend_by_popularity
+        :descend_by_name
       ]
     end
 
